@@ -8,9 +8,9 @@ function CountryLookup() {
   useEffect(() => {
     try {
       const fetchCountry = async () => {
-        const res = await fetch("http://ip-api.com/json?fields=country");
+        const res = await fetch("https://ipapi.co/json/");
         const data = await res.json();
-        setCountry(data.country);
+        setCountry(data.country_name);
       };
       fetchCountry();
     } catch (error) {
