@@ -14,7 +14,7 @@ function HomeSearch() {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
-    router.push(`/search/query?=${input}`);
+    router.push(`/search/web?query=${input}`);
   };
 
   const randomSearch = async () => {
@@ -23,7 +23,7 @@ function HomeSearch() {
       const res = await fetch("https://random-word-api.herokuapp.com/word");
       const data = await res.json();
       if (!res.ok) return;
-      router.push(`/search/query?=${data}`);
+      router.push(`/search/web?query=${data}`);
     } catch (error) {
       console.error(error);
     }
