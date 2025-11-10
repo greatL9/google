@@ -26,7 +26,7 @@ function SearchBox() {
     >
       <input
         type="text"
-        placeholder="search google"
+        placeholder="Search Google"
         className="w-full focus:outline-none"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
