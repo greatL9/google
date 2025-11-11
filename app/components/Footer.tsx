@@ -1,10 +1,13 @@
+import { Suspense } from "react";
 import { CountryLookup } from "./CountryLookup";
 
 function Footer() {
   return (
     <footer className="absolute bottom-0 text-sm text-gray-600 bg-[#f2f2f2] w-full">
       <div className="border-b px-8 py-3">
-        <CountryLookup />
+        <Suspense fallback={<p>Loading...</p>}>
+          <CountryLookup />
+        </Suspense>
       </div>
       <div className="flex flex-col sm:flex-row justify-between items-center px-8 py-3 space-y-7 sm:space-y-0">
         <ul className="flex items-center space-x-6">

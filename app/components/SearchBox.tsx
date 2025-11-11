@@ -35,7 +35,7 @@ function SearchBox() {
         className="text-gray-500 text-2xl cursor-pointer sm:mr-2"
         onClick={() => setQuery("")}
       />
-      <IoMdMic className="hidden sm:inline-flex text-blue-500 text-4xl pl-4 border-l-2 border-gray-300 mr-3" />
+      <IoMdMic className="hidden sm:inline-flex text-blue-500 text-4xl pl-4 border-l-2 border-gray-300 mr-3 cursor-pointer" />
       <AiOutlineSearch
         onClick={handleSubmit}
         className="text-2xl hidden sm:inline-flex text-blue-500 cursor-pointer"
