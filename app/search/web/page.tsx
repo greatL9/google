@@ -1,10 +1,7 @@
+import { WebSearchResult } from "@/app/components/WebSearchResult";
 import Link from "next/link";
 
-interface Results {
-  title: string;
-}
-
-export default async function page({
+export default async function Page({
   searchParams,
 }: {
   searchParams: Promise<{ query: string }>;
@@ -18,7 +15,7 @@ export default async function page({
     throw new Error("Error fetching data");
   }
   const data = await res.json();
-  const results: Results[] = data.items;
+  const results = data.items;
 
   if (!results) {
     return (
@@ -34,10 +31,5 @@ export default async function page({
     );
   }
 
-  return (
-    <>
-      {results &&
-        results.map((result) => <h1 key={result.title}>{result.title}</h1>)}
-    </>
-  );
+  return <>{results && <WebSearchResult results={data} />}</>;
 }
