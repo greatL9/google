@@ -1,7 +1,7 @@
 import { WebSearchResult } from "@/app/components/WebSearchResult";
 import Link from "next/link";
 
-export default async function Page({
+export default async function WebSearchPage({
   searchParams,
 }: {
   searchParams: Promise<{ query: string }>;
