@@ -11,7 +11,7 @@ export default function Loading() {
         <div className="h-2 w-80 mb-2.5 bg-gray-200 rounded-md"></div>
         <div className="h-2 w-44 mb-2.5 bg-gray-200 rounded-md"></div>
       </div>
-      <div className="animate-pulse ">
+      <div className="animate-pulse hidden sm:inline-flex">
         <div className="h-60 w-85 mb-4 bg-gray-200 rounded-md"></div>
         <div className="h-2 w-80 mb-2.5 bg-gray-200 rounded-md"></div>
         <div className="h-2 w-44 mb-2.5 bg-gray-200 rounded-md"></div>

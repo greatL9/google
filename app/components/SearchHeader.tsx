@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { SearchBox } from "./SearchBox";
@@ -17,6 +19,8 @@ interface Session {
 
 function SearchHeader({ session }: { session: Session | null }) {
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleSignIn = async () => {
     try {
@@ -27,8 +31,15 @@ function SearchHeader({ session }: { session: Session | null }) {
       setIsSigningIn(false);
     }
   };
+
   const handleSignOut = async () => {
-    await signOut();
+    try {
+      setIsSigningOut(true);
+      await signOut();
+    } catch (error) {
+      console.error("Error signing out:", error);
+      setIsSigningOut(false);
+    }
   };
   return (
     <header className="stick top-0 bg-white">
@@ -44,26 +55,46 @@ function SearchHeader({ session }: { session: Session | null }) {
               style={{ height: "auto", width: "auto" }}
             />
           </Link>
-          {session?.user ? (
-            <Image
-              src={session?.user.image || "/default-profile.png"}
-              alt="user"
-              width={40}
-              height={40}
-              className="rounded-full w-11 h-11 cursor-pointer hover:brightness-95"
+          <div className="flex items-center md:hidden space-x-2 relative">
+            <CgMenuGridO
+              onClick={() => setMenuOpen(!menuOpen)}
+              className=" md:hidden header-icon"
             />
-          ) : (
-            <button
-              onClick={handleSignIn}
-              className="text-white bg-blue-700 px-6 py-2 font-medium rounded-full hover:brightness-105 hover:shadow-md transition-all cursor-pointer ml-2 md:hidden"
-            >
-              {isSigningIn ? (
-                <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              ) : (
-                "Sign in"
-              )}
-            </button>
-          )}
+            {menuOpen && (
+              <div className="absolute right-0 mr-20 mt-3 bg-white shadow-lg rounded-xl w-15 text-sm">
+                {session?.user ? (
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    {isSigningOut ? "Signing out..." : "Sign out"}
+                  </button>
+                ) : (
+                  <div className="px-4 py-2 text-sm">Sign in to continue</div>
+                )}
+              </div>
+            )}
+            {session?.user ? (
+              <Image
+                src={session?.user.image || "/default-profile.png"}
+                alt="user"
+                width={40}
+                height={40}
+                className="rounded-full w-11 h-11 cursor-pointer hover:brightness-95 md:hidden"
+              />
+            ) : (
+              <button
+                onClick={handleSignIn}
+                className="text-white bg-blue-700 px-6 py-2 font-medium rounded-full hover:brightness-105 hover:shadow-md transition-all cursor-pointer ml-2 md:hidden"
+              >
+                {isSigningIn ? (
+                  <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  "Sign in"
+                )}
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="flex-1 w-full">
@@ -71,9 +102,12 @@ function SearchHeader({ session }: { session: Session | null }) {
             <SearchBox />
           </Suspense>
         </div>
-        <div className="hidden md:flex space-x-2">
+        <div className="hidden md:flex items-center space-x-2">
           <IoSettingsOutline className="header-icon" />
-          <CgMenuGridO onClick={handleSignOut} className="header-icon" />
+          <CgMenuGridO
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="header-icon"
+          />
         </div>
         {session?.user ? (
           <Image
@@ -81,7 +115,7 @@ function SearchHeader({ session }: { session: Session | null }) {
             alt="user"
             width={40}
             height={40}
-            className="rounded-full w-11 h-11 cursor-pointer hover:brightness-95"
+            className="rounded-full w-11 h-11 cursor-pointer hover:brightness-95 hidden md:inline"
           />
         ) : (
           <button
@@ -94,6 +128,22 @@ function SearchHeader({ session }: { session: Session | null }) {
               "Sign in"
             )}
           </button>
+        )}
+        {menuOpen && (
+          <div className="hidden md:inline absolute right-0 mr-10 mt-28 bg-white shadow-lg rounded-xl py-2 w-32 text-sm">
+            {session?.user ? (
+              <button
+                onClick={handleSignOut}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+              >
+                {isSigningOut ? "Signing out..." : "Sign out"}
+              </button>
+            ) : (
+              <div className="px-4 py-2 text-sm">
+                Sign in to access more options
+              </div>
+            )}
+          </div>
         )}
       </div>
       <Suspense fallback={<p>Loading...</p>}>
