@@ -1,16 +1,21 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { CountryLookup } from "./CountryLookup";
 import { useTheme } from "next-themes";
 
 function Footer() {
+  const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
   const bgColor = resolvedTheme === "dark" ? "bg-[#121212]" : "bg-[#f2f2f2]";
   const textColor =
     resolvedTheme === "dark" ? "text-gray-300" : "text-gray-400";
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  if (!resolvedTheme) return null;
+  if (!mounted) return null;
+
   return (
     <footer
       className={`absolute bottom-0 text-sm ${textColor} ${bgColor} w-full`}

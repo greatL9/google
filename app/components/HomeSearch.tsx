@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoMdMic } from "react-icons/io";
 import { useRouter } from "next/navigation";
@@ -8,12 +8,17 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 
 function HomeSearch() {
+  const [mounted, setMounted] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { resolvedTheme } = useTheme();
 
-  if (!resolvedTheme) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   const btnColor = resolvedTheme === "dark" ? "btn-dark" : "btn";
   const borderColor =

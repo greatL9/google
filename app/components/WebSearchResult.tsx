@@ -29,6 +29,7 @@ function WebSearchResult({ results }: { results: ResultsProps }) {
     resolvedTheme === "dark" ? "text-gray-300" : "text-gray-600";
   const textDecoration =
     resolvedTheme === "dark" ? "decoration-blue-300" : "decoration-blue-700";
+  if (!resolvedTheme) return null;
 
   return (
     <div className="w-full mx-auto px-3 pb-40 sm:pb-24 sm:pl-[5%] md:pl-[14%] lg:pl-52">

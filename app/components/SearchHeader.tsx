@@ -5,17 +5,24 @@ import Link from "next/link";
 import { SearchBox } from "./SearchBox";
 import { CgMenuGridO } from "react-icons/cg";
 import { SearchHeaderOptions } from "./SearchHeaderOptions";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { ThemeSwitch } from "./ThemeSwitch";
 import { useTheme } from "next-themes";
 
 function SearchHeader() {
+  const [mounted, setMounted] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { data: session } = useSession();
   const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
   const headerBg = resolvedTheme === "dark" ? "bg-[#121212]" : "bg-white";
   const icon = resolvedTheme === "dark" ? "header-icon-2" : "header-icon";
 
@@ -56,14 +63,25 @@ function SearchHeader() {
           <div className="flex items-center md:hidden space-x-2 relative">
             <CgMenuGridO
               onClick={() => setMenuOpen(!menuOpen)}
-              className=" md:hidden header-icon"
+              className="md:hidden header-icon"
             />
             {menuOpen && (
-              <div className="absolute right-0 mr-20 mt-3 bg-white shadow-lg rounded-xl w-15 text-sm">
+              <div
+                className={`absolute right-0 mr-20 mt-3 shadow-lg rounded-xl py-2 w-15 text-sm border ${
+                  resolvedTheme === "dark"
+                    ? "bg-[#222] text-white border-gray-700"
+                    : "bg-white text-black border-gray-200"
+                }
+    `}
+              >
                 {session?.user ? (
                   <button
                     onClick={handleSignOut}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                    className={`w-full text-left px-4 py-2 
+          ${
+            resolvedTheme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-100"
+          }
+        `}
                   >
                     {isSigningOut ? "Signing out..." : "Sign out"}
                   </button>
@@ -72,6 +90,7 @@ function SearchHeader() {
                 )}
               </div>
             )}
+
             {session?.user ? (
               <Image
                 src={session?.user.image || "/default-profile.png"}
@@ -127,19 +146,30 @@ function SearchHeader() {
             )}
           </button>
         )}
+
         {menuOpen && (
-          <div className="hidden md:inline absolute right-0 mr-10 mt-28 bg-white shadow-lg rounded-xl py-2 w-32 text-sm">
+          <div
+            className={`hidden md:inline absolute right-0 mr-10 mt-28 shadow-lg rounded-xl py-2 w-32 text-sm border
+      ${
+        resolvedTheme === "dark"
+          ? "bg-[#222] text-white border-gray-700"
+          : "bg-white text-black border-gray-200"
+      }
+    `}
+          >
             {session?.user ? (
               <button
                 onClick={handleSignOut}
-                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                className={`w-full text-left px-4 py-2 
+          ${
+            resolvedTheme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-100"
+          }
+        `}
               >
                 {isSigningOut ? "Signing out..." : "Sign out"}
               </button>
             ) : (
-              <div className="px-4 py-2 text-sm">
-                Sign in to access more options
-              </div>
+              <div className="px-4 py-2 text-sm">Sign in to continue</div>
             )}
           </div>
         )}

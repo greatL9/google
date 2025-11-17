@@ -12,6 +12,7 @@ function PaginationButtons() {
   const startIndex = Number(searchParams.get("start")) || 1;
   const { resolvedTheme } = useTheme();
   const text = resolvedTheme === "dark" ? "text-blue-300" : "text-blue-700";
+  if (!resolvedTheme) return null;
 
   return (
     <div

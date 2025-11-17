@@ -23,6 +23,7 @@ function SearchHeaderOptions() {
       : "text-blue-700! border-blue-700!";
   const inactiveTextClass =
     resolvedTheme === "dark" ? "text-gray-300" : "text-gray-600";
+  if (!resolvedTheme) return null;
 
   return (
     <div className="flex space-x-2 text-sm select-none border-b w-full justify-center lg:justify-start lg:pl-52 text-gray-700">

@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="dark" lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className="relative min-h-screen">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SessionProvider>

@@ -4,15 +4,23 @@ import Link from "next/link";
 import { CgMenuGridO } from "react-icons/cg";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
 function HomeHeader() {
+  const [mounted, setMounted] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { data: session } = useSession();
   const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   const icon =
     resolvedTheme === "dark" ? "header-icon-2" : "header-icon text-black";
 
@@ -58,18 +66,27 @@ function HomeHeader() {
           />
 
           {menuOpen && (
-            <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-xl py-2 w-32 text-sm border">
+            <div
+              className={`absolute right-0 mt-2 shadow-lg rounded-xl py-2 w-40 text-sm border ${
+                resolvedTheme === "dark"
+                  ? "bg-[#222] text-white border-gray-700"
+                  : "bg-white text-black border-gray-200"
+              }
+    `}
+            >
               {session?.user ? (
                 <button
                   onClick={handleSignOut}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                  className={`w-full text-left px-4 py-2 
+          ${
+            resolvedTheme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-100"
+          }
+        `}
                 >
                   {isSigningOut ? "Signing out..." : "Sign out"}
                 </button>
               ) : (
-                <div className="px-4 py-2 text-sm">
-                  Sign in to access more options
-                </div>
+                <div className="px-4 py-2 text-sm">Sign in to continue</div>
               )}
             </div>
           )}
