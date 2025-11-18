@@ -1,30 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoMdMic } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useTheme } from "next-themes";
 
 function HomeSearch() {
-  const [mounted, setMounted] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  const btnColor = resolvedTheme === "dark" ? "btn-dark" : "btn";
-  const borderColor =
-    resolvedTheme === "dark"
-      ? "border-[#121212] bg-[#4d5156]"
-      : "border-gray-200";
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -53,7 +38,7 @@ function HomeSearch() {
     <>
       <form
         onSubmit={handleSubmit}
-        className={`flex w-full mt-5 mx-auto max-w-[90%] border ${borderColor} px-5 py-3 rounded-full hover:shadow-md transition-shadow focus-within:shadow-md sm:max-w-xl lg:max-w-2xl items-center`}
+        className="flex w-full mt-5 mx-auto max-w-[90%] border border-gray-200 dark:border-[#121212] dark:bg-[#4d5156] px-5 py-3 rounded-full hover:shadow-md transition-shadow focus-within:shadow-md sm:max-w-xl lg:max-w-2xl items-center"
       >
         <AiOutlineSearch className="text-gray-500 text-xl mr-3" />
         <input
@@ -66,13 +51,16 @@ function HomeSearch() {
         <IoMdMic className="text-gray-500 text-xl ml-3" />
       </form>
       <div className="flex flex-col sm:space-y-0 space-y-2 sm:flex-row sm:space-x-4 mt-8 justify-center">
-        <button onClick={handleSubmit} className={`${btnColor}`}>
+        <button
+          onClick={handleSubmit}
+          className="btn dark:bg-gray-700/30 dark:text-gray-200 active:ring-gray-200 hover:ring-gray-400/40"
+        >
           Google Search
         </button>
         <button
           disabled={loading}
           onClick={randomSearch}
-          className={`${btnColor} flex items-center justify-center disabled:opacity-80`}
+          className="btn flex items-center justify-center disabled:opacity-80 dark:bg-gray-700/30 dark:text-gray-200 active:ring-gray-200 hover:ring-gray-400/40"
         >
           {loading ? (
             <Image

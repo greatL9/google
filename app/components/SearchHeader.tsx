@@ -5,26 +5,15 @@ import Link from "next/link";
 import { SearchBox } from "./SearchBox";
 import { CgMenuGridO } from "react-icons/cg";
 import { SearchHeaderOptions } from "./SearchHeaderOptions";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { ThemeSwitch } from "./ThemeSwitch";
-import { useTheme } from "next-themes";
 
 function SearchHeader() {
-  const [mounted, setMounted] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { data: session } = useSession();
-  const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-  const headerBg = resolvedTheme === "dark" ? "bg-[#121212]" : "bg-white";
-  const icon = resolvedTheme === "dark" ? "header-icon-2" : "header-icon";
 
   const handleSignIn = async () => {
     try {
@@ -45,9 +34,8 @@ function SearchHeader() {
       setIsSigningOut(false);
     }
   };
-
   return (
-    <header className={`stick top-0 ${headerBg}`}>
+    <header className="stick top-0 bg-white dark:bg-[#1f1f1f]">
       <div className="flex flex-col md:flex-row w-full p-4 md:p-6 items-center md:justify-between space-y-4 md:space-y-0">
         <div className="flex w-full items-center justify-between md:w-auto">
           <Link href={"/"}>
@@ -63,25 +51,14 @@ function SearchHeader() {
           <div className="flex items-center md:hidden space-x-2 relative">
             <CgMenuGridO
               onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden header-icon"
+              className="header-icon"
             />
             {menuOpen && (
-              <div
-                className={`absolute right-0 mr-20 mt-3 shadow-lg rounded-xl py-2 w-15 text-sm border ${
-                  resolvedTheme === "dark"
-                    ? "bg-[#222] text-white border-gray-700"
-                    : "bg-white text-black border-gray-200"
-                }
-    `}
-              >
+              <div className="md:hidden absolute right-0 mr-20 mt-3 bg-white dark:bg-[#222] dark:text-white dark:border-gray-700 shadow-lg rounded-xl w-15 text-sm">
                 {session?.user ? (
                   <button
                     onClick={handleSignOut}
-                    className={`w-full text-left px-4 py-2 
-          ${
-            resolvedTheme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-100"
-          }
-        `}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
                   >
                     {isSigningOut ? "Signing out..." : "Sign out"}
                   </button>
@@ -90,7 +67,6 @@ function SearchHeader() {
                 )}
               </div>
             )}
-
             {session?.user ? (
               <Image
                 src={session?.user.image || "/default-profile.png"}
@@ -102,7 +78,7 @@ function SearchHeader() {
             ) : (
               <button
                 onClick={handleSignIn}
-                className="text-white bg-blue-700 px-6 py-2 font-medium rounded-full hover:brightness-105 hover:shadow-md transition-all cursor-pointer ml-2 md:hidden"
+                className="text-white bg-blue-700 dark:bg-[#c2e8ff] dark:text-gray-950 px-6 py-2 font-medium rounded-full hover:brightness-105 hover:shadow-md transition-all cursor-pointer ml-2 md:hidden"
               >
                 {isSigningIn ? (
                   <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -123,7 +99,7 @@ function SearchHeader() {
           <ThemeSwitch />
           <CgMenuGridO
             onClick={() => setMenuOpen(!menuOpen)}
-            className={`${icon}`}
+            className="header-icon dark:text-gray-400 dark:hover:bg-gray-700/50"
           />
         </div>
         {session?.user ? (
@@ -137,34 +113,21 @@ function SearchHeader() {
         ) : (
           <button
             onClick={handleSignIn}
-            className="hidden md:inline text-white bg-blue-700 px-6 py-2 font-medium rounded-full hover:brightness-105 hover:shadow-md transition-all cursor-pointer ml-2"
+            className="hidden md:inline text-white bg-blue-700 dark:bg-[#c2e8ff] dark:text-gray-950 px-6 py-2 font-medium rounded-full hover:brightness-105 hover:shadow-md transition-all cursor-pointer ml-2"
           >
             {isSigningIn ? (
-              <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <div className="h-4 w-4 border-2 border-white  border-t-transparent rounded-full animate-spin"></div>
             ) : (
               "Sign in"
             )}
           </button>
         )}
-
         {menuOpen && (
-          <div
-            className={`hidden md:inline absolute right-0 mr-10 mt-28 shadow-lg rounded-xl py-2 w-32 text-sm border
-      ${
-        resolvedTheme === "dark"
-          ? "bg-[#222] text-white border-gray-700"
-          : "bg-white text-black border-gray-200"
-      }
-    `}
-          >
+          <div className="hidden md:inline absolute right-0 mr-10 mt-28 bg-white dark:bg-[#222] dark:text-white dark:border-gray-700 shadow-lg rounded-xl py-2 w-32 text-sm">
             {session?.user ? (
               <button
                 onClick={handleSignOut}
-                className={`w-full text-left px-4 py-2 
-          ${
-            resolvedTheme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-100"
-          }
-        `}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100"
               >
                 {isSigningOut ? "Signing out..." : "Sign out"}
               </button>

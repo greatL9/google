@@ -4,25 +4,13 @@ import Link from "next/link";
 import { CgMenuGridO } from "react-icons/cg";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import { useState } from "react";
 
 function HomeHeader() {
-  const [mounted, setMounted] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { data: session } = useSession();
-  const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  const icon =
-    resolvedTheme === "dark" ? "header-icon-2" : "header-icon text-black";
 
   const handleSignIn = async () => {
     try {
@@ -62,26 +50,15 @@ function HomeHeader() {
         <div className="relative">
           <CgMenuGridO
             onClick={() => setMenuOpen(!menuOpen)}
-            className={`${icon}`}
+            className="bg-transparent text-black text-4xl hover:bg-gray-200 dark:hover:bg-gray-700/50 dark:text-white p-2 rounded-full cursor-pointer"
           />
 
           {menuOpen && (
-            <div
-              className={`absolute right-0 mt-2 shadow-lg rounded-xl py-2 w-40 text-sm border ${
-                resolvedTheme === "dark"
-                  ? "bg-[#222] text-white border-gray-700"
-                  : "bg-white text-black border-gray-200"
-              }
-    `}
-            >
+            <div className="absolute right-0 mt-2 bg-white dark:bg-[#222] dark:text-white dark:border-gray-700 shadow-lg rounded-xl py-2 w-32 text-sm border">
               {session?.user ? (
                 <button
                   onClick={handleSignOut}
-                  className={`w-full text-left px-4 py-2 
-          ${
-            resolvedTheme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-100"
-          }
-        `}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
                 >
                   {isSigningOut ? "Signing out..." : "Sign out"}
                 </button>
@@ -103,7 +80,7 @@ function HomeHeader() {
         ) : (
           <button
             onClick={handleSignIn}
-            className="text-white bg-blue-700 px-6 py-2 font-medium rounded-full hover:brightness-105 hover:shadow-md transition-shadow cursor-pointer"
+            className="text-white bg-blue-700 dark:bg-[#c2e8ff] dark:text-gray-950 px-6 py-2 font-medium rounded-full hover:brightness-105 hover:shadow-md transition-shadow cursor-pointer"
           >
             {isSigningIn ? (
               <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

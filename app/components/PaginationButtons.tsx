@@ -1,5 +1,4 @@
 "use client";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { GoChevronLeft } from "react-icons/go";
@@ -10,14 +9,9 @@ function PaginationButtons() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("query");
   const startIndex = Number(searchParams.get("start")) || 1;
-  const { resolvedTheme } = useTheme();
-  const text = resolvedTheme === "dark" ? "text-blue-300" : "text-blue-700";
-  if (!resolvedTheme) return null;
 
   return (
-    <div
-      className={`${text} px-10 pb-4 justify-between flex sm:justify-start sm:space-x-44 sm:px-0`}
-    >
+    <div className="text-blue-700 dark:text-blue-300 px-10 pb-4 justify-between flex sm:justify-start sm:space-x-44 sm:px-0">
       {startIndex >= 10 && (
         <Link
           href={`${pathname}?query=${searchQuery}&start=${startIndex - 10}`}

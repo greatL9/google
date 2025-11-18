@@ -1,6 +1,6 @@
 import { SearchHeader } from "../components/SearchHeader";
 
-export default async function SearchLayout({
+export default function SearchLayout({
   children,
 }: {
   children: React.ReactNode;

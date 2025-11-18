@@ -2,7 +2,7 @@ import Image from "next/image";
 import { HomeHeader } from "./components/HomeHeader";
 import { HomeSearch } from "./components/HomeSearch";
 
-export default async function Home() {
+export default function Home() {
   return (
     <div>
       <main>
