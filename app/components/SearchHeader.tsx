@@ -54,7 +54,7 @@ function SearchHeader() {
               className="header-icon"
             />
             {menuOpen && (
-              <div className="md:hidden absolute right-0 mr-20 mt-3 bg-white dark:bg-[#222] dark:text-white dark:border-gray-700 shadow-lg rounded-xl w-15 text-sm">
+              <div className="md:hidden absolute right-0 mr-35 mt-3 bg-white dark:bg-[#222] dark:text-white dark:border-gray-700 shadow-lg rounded-xl w-15 text-sm">
                 {session?.user ? (
                   <button
                     onClick={handleSignOut}
@@ -63,7 +63,7 @@ function SearchHeader() {
                     {isSigningOut ? "Signing out..." : "Sign out"}
                   </button>
                 ) : (
-                  <div className="px-4 py-2 text-sm">Sign in to continue</div>
+                  <div className="px-1 py-1 text-sm">Options</div>
                 )}
               </div>
             )}
@@ -123,7 +123,7 @@ function SearchHeader() {
           </button>
         )}
         {menuOpen && (
-          <div className="hidden md:inline absolute right-0 mr-10 mt-28 bg-white dark:bg-[#222] dark:text-white dark:border-gray-700 shadow-lg rounded-xl py-2 w-32 text-sm">
+          <div className="hidden md:inline absolute right-0 mr-20 mt-28 bg-white dark:bg-[#222] dark:text-white dark:border-gray-700 shadow-lg rounded-xl py-2 w-32 text-sm">
             {session?.user ? (
               <button
                 onClick={handleSignOut}
@@ -132,7 +132,7 @@ function SearchHeader() {
                 {isSigningOut ? "Signing out..." : "Sign out"}
               </button>
             ) : (
-              <div className="px-4 py-2 text-sm">Sign in to continue</div>
+              <div className="px-4 py-2 text-sm">Not signed in</div>
             )}
           </div>
         )}

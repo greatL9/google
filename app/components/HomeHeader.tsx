@@ -54,7 +54,7 @@ function HomeHeader() {
           />
 
           {menuOpen && (
-            <div className="absolute right-0 mt-2 bg-white dark:bg-[#222] dark:text-white dark:border-gray-700 shadow-lg rounded-xl py-2 w-32 text-sm border">
+            <div className="absolute right-0 mt-2 bg-white dark:bg-[#222] dark:text-white dark:border-gray-700 shadow-lg rounded-xl py-1 w-31 text-sm border">
               {session?.user ? (
                 <button
                   onClick={handleSignOut}
@@ -63,7 +63,7 @@ function HomeHeader() {
                   {isSigningOut ? "Signing out..." : "Sign out"}
                 </button>
               ) : (
-                <div className="px-4 py-2 text-sm">Sign in to continue</div>
+                <div className="px-3 py-1 text-sm">Not signed in</div>
               )}
             </div>
           )}
