@@ -116,7 +116,7 @@ function SearchHeader() {
             className="hidden md:inline text-white bg-blue-700 dark:bg-[#c2e8ff] dark:text-gray-950 px-6 py-2 font-medium rounded-full hover:brightness-105 hover:shadow-md transition-all cursor-pointer ml-2"
           >
             {isSigningIn ? (
-              <div className="h-4 w-4 border-2 border-white  border-t-transparent rounded-full animate-spin"></div>
+              <div className="h-4 w-4 border-2 border-white dark:hover:bg-gray-700/50 border-t-transparent rounded-full animate-spin"></div>
             ) : (
               "Sign in"
             )}
@@ -127,7 +127,7 @@ function SearchHeader() {
             {session?.user ? (
               <button
                 onClick={handleSignOut}
-                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700/50"
               >
                 {isSigningOut ? "Signing out..." : "Sign out"}
               </button>
