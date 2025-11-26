@@ -49,6 +49,7 @@ function SearchHeader() {
             />
           </Link>
           <div className="flex items-center md:hidden space-x-2 relative">
+            <ThemeSwitch />
             <CgMenuGridO
               onClick={() => setMenuOpen(!menuOpen)}
               className="header-icon"
