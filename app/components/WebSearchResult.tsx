@@ -55,13 +55,13 @@ function WebSearchResult({ results }: { results: ResultsProps }) {
                 )}
                 <div className="flex flex-col">
                   <Link
-                    className="text-md text-gray-600 dark:text-gray-300"
+                    className="text-md text-gray-600 truncate dark:text-gray-300"
                     href={result?.link}
                   >
                     {displayLinkText}
                   </Link>
                   <Link
-                    className="text-xs truncate text-gray-600 dark:text-gray-300"
+                    className="text-xs text-gray-600 dark:text-gray-300 truncate block max-w-xs"
                     href={result?.link}
                   >
                     {result.formattedUrl}
